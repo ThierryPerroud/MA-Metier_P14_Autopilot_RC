@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from Class.gliders import Gliders
+from Class import Gliders
 
 
 # CREATE - Créer un nouveau planeur
