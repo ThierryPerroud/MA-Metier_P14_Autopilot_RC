@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, ForeignKey
-from database import Base
+from Class.database import Base
 
 class gliders_has_flights(Base):
     __tablename__ = "gliders_has_flights"

@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, REAL, ForeignKey
-from database import Base
+from sqlalchemy import Column, Integer, REAL, ForeignKey
+from Class.database import Base
 
 class Configurations(Base):
     __tablename__ = "configurations"

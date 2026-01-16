@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, REAL, ForeignKey
-from database import Base
+from Class.database import Base
 
 class Telemetry_measurements(Base):
     __tablename__ = "telemetry_measurements"

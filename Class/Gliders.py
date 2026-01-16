@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, REAL
-from database import Base
+from Class.database import Base
 
 class Gliders(Base):
     __tablename__ = "gliders"
