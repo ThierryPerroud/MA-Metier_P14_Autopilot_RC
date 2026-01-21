@@ -7,4 +7,4 @@ class gliders_has_flights(Base):
     flight_id = Column(Integer, ForeignKey("flights.Id"), primary_key=True)
 
     def __repr__(self):
-        return f"<glider {self.Id} {self.Model} {self.Empty_weight} {self.Center_gravity}>"
+        return f"<glider_has_flights {self.glider_id} {self.flight_id}>"

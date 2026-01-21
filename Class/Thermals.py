@@ -13,4 +13,4 @@ class Thermals(Base):
     Flight_id = Column(Integer, ForeignKey("flights.Id"))
 
     def __repr__(self):
-        return f"<glider {self.Id} {self.Model} {self.Empty_weight} {self.Center_gravity}>"
+        return f"<thermals {self.Id} {self.Min_atltitude} {self.Max_altitude} {self.Avg_variometer} {self.Start} {self.End} {self.Flight_id}>"

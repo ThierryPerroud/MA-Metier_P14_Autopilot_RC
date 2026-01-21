@@ -24,4 +24,6 @@ class Telemetry_measurements(Base):
     Flight_id = Column(Integer, ForeignKey("flights.Id"))
 
     def __repr__(self):
-        return f"<glider {self.Id} {self.Model} {self.Empty_weight} {self.Center_gravity}>"
+        return (f"<telemetry measurements {self.Id} {self.Timestamp} {self.Latitude} {self.Longitude} {self.Altitude} {self.Altitude_agl} "
+                f"{self.Indicated_airspeed} {self.Ground_speed} {self.Pitch} {self.Roll} {self.Yaw} {self.Vario} {self.G_factor} {self.Wind_direction} "
+                f"{self.Wind_force} {self.Temperature} {self.Pression} {self.Flight_id}>")
