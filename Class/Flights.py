@@ -6,7 +6,10 @@ class Flights(Base):
 
     Id = Column(Integer, primary_key=True)
     Starting_date = Column(String)
+    Starting_location = Column(String)
+
     Ending_date = Column(String)
+    Ending_location = Column(String)
 
 
     def __repr__(self):

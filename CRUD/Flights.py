@@ -2,14 +2,17 @@ from sqlalchemy.orm import Session
 from Class import Flights
 
 # CREATE - Créer un nouveau vol
-def create_flight(db: Session, Starting_date: str, Ending_date: str):
+def create_flight(db: Session, Starting_date: str, Starting_location: str, Ending_date: str, Ending_location: str):
     new_flight = Flights(
         Starting_date=Starting_date,
+        Starting_location=Starting_location,
         Ending_date=Ending_date,
+        Ending_location=Ending_location,
     )
     db.add(new_flight)
     db.commit()
     db.refresh(new_flight)
+    db.close()
     return new_flight
 
 # READ - Lire un vol par son ID
@@ -30,6 +33,7 @@ def update_flight(db: Session, flight_id: int, Starting_date: str = None, Ending
             flight.Ending_date = Ending_date
         db.commit()
         db.refresh(flight)
+        db.close()
     return flight
 
 # DELETE - Supprimer un vol
@@ -39,6 +43,7 @@ def delete_flight(db: Session, flight_id: int):
     if flight:
         db.delete(flight)
         db.commit()
+        db.close()
         return True
 
     return False

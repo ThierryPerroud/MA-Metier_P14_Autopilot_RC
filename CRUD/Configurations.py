@@ -9,6 +9,7 @@ def create_configuration(db: Session, name: str, value: str):
     db.add(new_configuration)
     db.commit()
     db.refresh(new_configuration)
+    db.close()
     return new_configuration
 
 def get_configuration(db: Session, config_id: int):
@@ -28,6 +29,7 @@ def update_configuration(db: Session, config_id: int, name: str = None, value: s
 
         db.commit()
         db.refresh(configuration)
+        db.close()
 
     return configuration
 
@@ -37,6 +39,7 @@ def delete_configuration(db: Session, config_id: int):
     if configuration:
         db.delete(configuration)
         db.commit()
+        db.close()
         return True
 
     return False

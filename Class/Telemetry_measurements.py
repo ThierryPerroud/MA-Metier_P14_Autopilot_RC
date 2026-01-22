@@ -5,25 +5,26 @@ class Telemetry_measurements(Base):
     __tablename__ = "telemetry_measurements"
 
     Id = Column(Integer, primary_key=True)
-    Timestamp = Column(String)
-    Latitude = Column(REAL)
-    Longitude = Column(REAL)
-    Altitude = Column(Integer)
-    Altitude_agl = Column(Integer)
-    Indicated_airspeed = Column(REAL)
-    Ground_speed = Column(REAL)
-    Pitch = Column(REAL)
-    Roll = Column(REAL)
-    Yaw = Column(REAL)
-    Vario = Column(REAL)
-    G_factor = Column(REAL)
-    Wind_direction = Column(Integer)
-    Wind_force = Column(REAL)
-    Temperature = Column(REAL)
-    Pression= Column(REAL)
+    Timestamp = Column(String)          # datetime.now() | LOCAL_TIME
+    Latitude = Column(REAL)             # PLANE_LATITUDE
+    Longitude = Column(REAL)            # PLANE_LONGITUDE
+    Altitude = Column(Integer)          # PLANE_ALTITUDE
+    Altitude_agl = Column(Integer)      # PLANE_ALT_ABOVE_GROUND
+    Indicated_airspeed = Column(REAL)   # AIRSPEED_INDICATED
+    Ground_speed = Column(REAL)         # GROUND_VELOCITY
+    Vertical_speed = Column(REAL)       # VERTICAL_SPEED
+    Pitch = Column(REAL)                # PLANE_PITCH_DEGREES
+    Roll = Column(REAL)                 # PLANE_BANK_DEGREES
+    Yaw = Column(REAL)                  # PLANE_HEADING_DEGREES_MAGNETIC
+    Vario = Column(REAL)                # TBD
+    G_force = Column(REAL)              # TBD
+    Wind_direction = Column(Integer)    # TBD
+    Wind_force = Column(REAL)           # TBD
+    Temperature = Column(REAL)          # TBD
+    Pressure= Column(REAL)              # TBD
     Flight_id = Column(Integer, ForeignKey("flights.Id"))
 
     def __repr__(self):
         return (f"<telemetry measurements {self.Id} {self.Timestamp} {self.Latitude} {self.Longitude} {self.Altitude} {self.Altitude_agl} "
-                f"{self.Indicated_airspeed} {self.Ground_speed} {self.Pitch} {self.Roll} {self.Yaw} {self.Vario} {self.G_factor} {self.Wind_direction} "
-                f"{self.Wind_force} {self.Temperature} {self.Pression} {self.Flight_id}>")
+                f"{self.Indicated_airspeed} {self.Ground_speed} {self.Vertical_speed} {self.Pitch} {self.Roll} {self.Yaw} {self.Vario} {self.G_force} {self.Wind_direction} "
+                f"{self.Wind_force} {self.Temperature} {self.Pressure} {self.Flight_id}>")

@@ -10,6 +10,7 @@ def create_thermal(db: Session, strength: float, radius: float, glider_id: int):
     db.add(new_thermal)
     db.commit()
     db.refresh(new_thermal)
+    db.close()
     return new_thermal
 
 def get_thermal(db: Session, thermal_id: int):
@@ -24,6 +25,7 @@ def delete_thermal(db: Session, thermal_id: int):
     if thermal:
         db.delete(thermal)
         db.commit()
+        db.close()
     return thermal
 
 def update_thermal(db: Session, thermal_id: int, strength: float = None, radius: float = None, glider_id: int = None):
@@ -37,6 +39,7 @@ def update_thermal(db: Session, thermal_id: int, strength: float = None, radius:
             thermal.glider_id = glider_id
         db.commit()
         db.refresh(thermal)
+        db.close()
     return thermal
 
 

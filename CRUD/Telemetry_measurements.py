@@ -5,9 +5,9 @@ from Class import Telemetry_measurements
 # CREATE - Créer une nouvelle mesure de télémétrie
 def create_measurement(db: Session, timestamp: str, latitude: float, longitude: float,
                        altitude: int, altitude_agl: int, indicated_airspeed: float,
-                       ground_speed: float, pitch: float, roll: float, yaw: float,
-                       vario: float, g_factor: float, wind_direction: int,
-                       wind_force: float, temperature: float, pression: float, flight_id: int):
+                       ground_speed: float, vertical_speed: float, pitch: float, roll: float, yaw: float,
+                       vario: float, g_force: float, wind_direction: int,
+                       wind_force: float, temperature: float, pressure: float, flight_id: int):
     new_measurement = Telemetry_measurements(
         Timestamp=timestamp,
         Latitude=latitude,
@@ -16,20 +16,22 @@ def create_measurement(db: Session, timestamp: str, latitude: float, longitude: 
         Altitude_agl=altitude_agl,
         Indicated_airspeed=indicated_airspeed,
         Ground_speed=ground_speed,
+        Vertical_speed=vertical_speed,
         Pitch=pitch,
         Roll=roll,
         Yaw=yaw,
         Vario=vario,
-        G_factor=g_factor,
+        G_force=g_force,
         Wind_direction=wind_direction,
         Wind_force=wind_force,
         Temperature=temperature,
-        Pression=pression,
+        Pressure=pressure,
         Flight_id=flight_id
     )
     db.add(new_measurement)
     db.commit()
     db.refresh(new_measurement)
+    db.close()
     return new_measurement
 
 
@@ -59,6 +61,7 @@ def update_measurement(db: Session, measurement_id: int, **kwargs):
 
         db.commit()
         db.refresh(measurement)
+        db.close()
 
     return measurement
 
@@ -70,6 +73,7 @@ def delete_measurement(db: Session, measurement_id: int):
     if measurement:
         db.delete(measurement)
         db.commit()
+        db.close()
         return True
 
     return False
@@ -83,6 +87,7 @@ def delete_measurements_by_flight(db: Session, flight_id: int):
         for m in measurements:
             db.delete(m)
         db.commit()
+        db.close()
         return True
 
     return False
@@ -104,6 +109,7 @@ if __name__ == "__main__":
         altitude_agl=500,
         indicated_airspeed=80.5,
         ground_speed=85.2,
+        vertical_speed=90,
         pitch=5.2,
         roll=-2.1,
         yaw=180.0,
@@ -112,7 +118,7 @@ if __name__ == "__main__":
         wind_direction=270,
         wind_force=15.5,
         temperature=18.5,
-        pression=1013.25,
+        pressure=1013.25,
         flight_id=1
     )
     print(f"Créé: {mesure}")

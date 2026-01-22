@@ -12,6 +12,7 @@ def create_glider(db: Session, model: str, empty_weight: int, center_gravity: fl
     db.add(new_glider)
     db.commit()
     db.refresh(new_glider)
+    db.close()
     return new_glider
 
 
@@ -40,6 +41,7 @@ def update_glider(db: Session, glider_id: int, model: str = None,
 
         db.commit()
         db.refresh(glider)
+        db.close()
 
     return glider
 
@@ -51,6 +53,7 @@ def delete_glider(db: Session, glider_id: int):
     if glider:
         db.delete(glider)
         db.commit()
+        db.close()
         return True
 
     return False
