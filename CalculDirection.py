@@ -1,6 +1,5 @@
 import math
 
-# Version simplifiée si vous avez déjà PLANE_HEADING_MAGNETIC
 def cap_vrai(lat1, lon1, lat2, lon2):
     """
     Calcule le cap VRAI d'un point A vers B
