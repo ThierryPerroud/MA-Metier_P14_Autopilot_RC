@@ -21,7 +21,7 @@ class Telemetry_measurements(Base):
     Wind_direction = Column(Integer)    # get_wind_direction(AIRCRAFT_WIND_X, AIRCRAFT_WIND_Z, PLANE_HEADING_DEGREES_MAGNETIC)
     Wind_force = Column(REAL)           # get_wind_speed(AIRCRAFT_WIND_X + AIRCRAFT_WIND_Y + AIRCRAFT_WIND_Z)
     Temperature = Column(REAL)          # TOTAL_AIR_TEMPERATURE
-    Pressure= Column(REAL)              # TBD
+    Pressure= Column(REAL)              # get_pressure(SEA_LEVEL_PRESSURE, PLANE_ALTITUDE)
     Flight_id = Column(Integer, ForeignKey("flights.Id"))
 
     def __repr__(self):
