@@ -5,11 +5,11 @@ class Flights(Base):
     __tablename__ = "flights"
 
     Id = Column(Integer, primary_key=True)
-    Starting_date = Column(String)
-    Starting_location = Column(String)
-
-    Ending_date = Column(String)
-    Ending_location = Column(String)
+    Starting_date = Column(String)          # datetime.now() (at the beginning of the flight
+    Starting_location = Column(String)      # PLANE_LATITUDE, PLANE_LONGITUDE (at the beginning of the flight)
+    Destination_location = Column(String)   # TBD
+    Ending_date = Column(String)            # datetime.now() (at the end of the flight)
+    Ending_location = Column(String)        # PLANE_LATITUDE, PLANE_LONGITUDE (at the end of the flight)
 
 
     def __repr__(self):

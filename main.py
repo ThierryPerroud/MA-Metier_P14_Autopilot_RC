@@ -1,13 +1,11 @@
 from SimConnect import SimConnect, AircraftRequests
 import time
 from Class.database import SessionLocal
-from CRUD import *
+from CRUD import create_measurement, create_flight, update_flight
 from datetime import datetime
-from Calculations import *
+from Calculations import get_wind_direction, get_wind_speed, get_pressure
 
-def insert_measurement():
-    db = SessionLocal()
-    timestamp = datetime.now()
+def insert_measurement(db, flight_id):
     latitude = aq.get("PLANE_LATITUDE")
     longitude = aq.get("PLANE_LONGITUDE")
     altitude = aq.get("PLANE_ALTITUDE")
@@ -25,20 +23,36 @@ def insert_measurement():
     wind_force = get_wind_speed(aq.get("AIRCRAFT_WIND_X"), aq.get("AIRCRAFT_WIND_Y"), aq.get("AIRCRAFT_WIND_Z"))
     temperature = aq.get("TOTAL_AIR_TEMPERATURE")
     pressure = get_pressure(aq.get("SEA_LEVEL_PRESSURE"), aq.get("PLANE_ALTITUDE"))
-    flight_id = None
 
-    create_measurement(db, timestamp, latitude, longitude, altitude, altitude_agl, indicated_airspeed, ground_speed,
+    create_measurement(db, datetime.now(), latitude, longitude, altitude, altitude_agl, indicated_airspeed, ground_speed,
                        vertical_speed, pitch, roll, yaw, vario, g_force, wind_direction, wind_force, temperature,
                        pressure,
                        flight_id)
 
+sm = SimConnect()
+aq = AircraftRequests(sm)
+db = SessionLocal()
+no_sim = False
 
+try:
+    current_flight = create_flight(db, datetime.now(), f"{aq.get("PLANE_LATITUDE")},{aq.get("PLANE_LONGITUDE")}",
+                                   f"", None, None)
+except Exception as e:
+    print("Impossible de créer un nouveau vol, le simulateur n'est pas en marche.")
+    no_sim = True
 
-while True:
-    sm = SimConnect()
-    aq = AircraftRequests(sm)
+while not no_sim:
+    try:
+        insert_measurement(db, current_flight.Id)
 
-    time.sleep(10)
-    insert_measurement()
+        if aq.get("AIRSPEED_INDICATED") < 3 and aq.get("GROUND_VELOCITY") < 3 and -15 < aq.get("VERTICAL_SPEED") < 3:
+            update_flight(db, current_flight.Id, None, None, None, datetime.now(),
+                        f"{aq.get("PLANE_LATITUDE")},{aq.get("PLANE_LONGITUDE")}")
+            break
 
-    sm.exit()
+        time.sleep(10)
+    except Exception as e:
+        print("Impossible d'enregistrer les données du vol, le simulateur n'est plus en marche")
+        no_sim = True
+
+sm.exit()

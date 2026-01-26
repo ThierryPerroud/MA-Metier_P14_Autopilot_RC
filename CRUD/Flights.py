@@ -2,10 +2,11 @@ from sqlalchemy.orm import Session
 from Class import Flights
 
 # CREATE - Créer un nouveau vol
-def create_flight(db: Session, Starting_date: str, Starting_location: str, Ending_date: str, Ending_location: str):
+def create_flight(db: Session, Starting_date: str, Starting_location: str, Destination_location: str, Ending_date: str, Ending_location: str):
     new_flight = Flights(
         Starting_date=Starting_date,
         Starting_location=Starting_location,
+        Destination_location=Destination_location,
         Ending_date=Ending_date,
         Ending_location=Ending_location,
     )
@@ -24,13 +25,20 @@ def get_all_flights(db: Session):
     return db.query(Flights).all()
 
 # UPDATE - Modifier un vol
-def update_flight(db: Session, flight_id: int, Starting_date: str = None, Ending_date: str = None):
+def update_flight(db: Session, flight_id: int, Starting_date: str = None, Starting_location: str = None, Destination_location: str = None,
+                  Ending_date: str = None, Ending_location: str = None):
     flight = db.query(Flights).filter(Flights.Id == flight_id).first()
     if flight:
         if Starting_date:
             flight.Starting_date = Starting_date
+        if Starting_location:
+            flight.Starting_location = Starting_location
+        if Destination_location:
+            flight.Destination_location = Destination_location
         if Ending_date:
             flight.Ending_date = Ending_date
+        if Ending_location:
+            flight.Ending_location = Ending_location
         db.commit()
         db.refresh(flight)
         db.close()
