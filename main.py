@@ -5,7 +5,7 @@ from Class.database import SessionLocal
 from CRUD import create_measurement, create_flight, update_flight
 from datetime import datetime
 from Calculations import get_wind_direction, get_wind_speed, get_pressure
-from ExportData.GetData import get_data
+from ExportData import get_data
 
 def insert_measurement(db, flight_id):
     latitude = aq.get("PLANE_LATITUDE")                                                                             # degrees
