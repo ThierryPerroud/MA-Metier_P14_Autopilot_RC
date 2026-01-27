@@ -1,6 +1,19 @@
+# Program name: CRUD.Gliders.py
+# Description: CRUD functions for the Gliders table in our database (unused, but kept for futureproofing)
+# Created by: Jason Edmonds
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.2
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 from sqlalchemy.orm import Session
 from Class import Gliders
 
+# **********************************************************************************************************************
+#   Functions
+# **********************************************************************************************************************
 
 # CREATE - Créer un nouveau planeur
 def create_glider(db: Session, model: str, empty_weight: int, center_gravity: float):

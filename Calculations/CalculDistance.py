@@ -1,4 +1,18 @@
+# Program name: Calculations.CalculDistance.py
+# Description: Function to calculate the distance between the starting location and the destination location
+# Created by: Jason Edmonds
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.2
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 import math
+
+# **********************************************************************************************************************
+#   Functions
+# **********************************************************************************************************************
 
 def distance_haversine(lat1, lon1, lat2, lon2):
     """

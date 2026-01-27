@@ -1,5 +1,19 @@
+# Program name: CRUD.Flights.py
+# Description: CRUD functions for the Flights table in our database
+# Created by: Jason Edmonds
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.4
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 from sqlalchemy.orm import Session
 from Class import Flights
+
+# **********************************************************************************************************************
+#   Functions
+# **********************************************************************************************************************
 
 # CREATE - Créer un nouveau vol
 def create_flight(db: Session, Starting_date: str, Starting_location: str, Destination_location: str, Ending_date: str, Ending_location: str):
@@ -16,13 +30,16 @@ def create_flight(db: Session, Starting_date: str, Starting_location: str, Desti
     db.close()
     return new_flight
 
+
 # READ - Lire un vol par son ID
 def get_flight(db: Session, flight_id: int):
     return db.query(Flights).filter(Flights.Id == flight_id).first()
 
+
 # READ - Lire tous les vols
 def get_all_flights(db: Session):
     return db.query(Flights).all()
+
 
 # UPDATE - Modifier un vol
 def update_flight(db: Session, flight_id: int, Starting_date: str = None, Starting_location: str = None, Destination_location: str = None,
@@ -44,6 +61,7 @@ def update_flight(db: Session, flight_id: int, Starting_date: str = None, Starti
         db.close()
     return flight
 
+
 # DELETE - Supprimer un vol
 def delete_flight(db: Session, flight_id: int):
     flight = db.query(Flights).filter(Flights.Id == flight_id).first()
@@ -55,6 +73,7 @@ def delete_flight(db: Session, flight_id: int):
         return True
 
     return False
+
 
 # EXEMPLE D'UTILISATION
 if __name__ == "__main__":

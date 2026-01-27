@@ -1,5 +1,19 @@
+# Program name: CRUD.Configuration.py
+# Description: CRUD functions for the Configuration table in our database (unused, but kept for futureproofing)
+# Created by: Anthony Vuagniaux
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.2
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 from Class.Configurations import Configurations
 from sqlalchemy.orm import Session
+
+# **********************************************************************************************************************
+#   Functions
+# **********************************************************************************************************************
 
 def create_configuration(db: Session, name: str, value: str):
     new_configuration = Configurations(
@@ -12,11 +26,14 @@ def create_configuration(db: Session, name: str, value: str):
     db.close()
     return new_configuration
 
+
 def get_configuration(db: Session, config_id: int):
     return db.query(Configurations).filter(Configurations.Id == config_id).first()
 
+
 def get_all_configurations(db: Session):
     return db.query(Configurations).all()
+
 
 def update_configuration(db: Session, config_id: int, name: str = None, value: str = None):
     configuration = db.query(Configurations).filter(Configurations.Id == config_id).first()
@@ -33,6 +50,7 @@ def update_configuration(db: Session, config_id: int, name: str = None, value: s
 
     return configuration
 
+
 def delete_configuration(db: Session, config_id: int):
     configuration = db.query(Configurations).filter(Configurations.Id == config_id).first()
 
@@ -43,6 +61,7 @@ def delete_configuration(db: Session, config_id: int):
         return True
 
     return False
+
 
 def example_usage(db: Session):
     # CREATE

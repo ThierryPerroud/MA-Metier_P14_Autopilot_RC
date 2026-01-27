@@ -1,6 +1,19 @@
+# Program name: Class.Telemetry_measurements.py
+# Description: Defines the Telemetry_measurements class
+# Created by: Jason Edmonds
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.2
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 from sqlalchemy import Column, Integer, String, REAL, ForeignKey
 from Class.database import Base
 
+# **********************************************************************************************************************
+#   Clases
+# **********************************************************************************************************************
 class Telemetry_measurements(Base):
     __tablename__ = "telemetry_measurements"
 

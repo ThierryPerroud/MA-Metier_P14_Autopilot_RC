@@ -1,5 +1,19 @@
+# Program name: ExportData.py
+# Description: Function to export a set of data to a csv file
+# Created by: Thierry Perroud
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.2
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 import sqlite3
 import pandas as pd
+
+# **********************************************************************************************************************
+#   Functions
+# **********************************************************************************************************************
 
 def get_data(id):
     conn = sqlite3.connect('database.db')                                                               # Connection to database

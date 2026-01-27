@@ -1,3 +1,13 @@
+# Program name: main.py
+# Description: Main program of the glider autopilot
+# Created by: Thierry Perroud
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.5
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 from SimConnect import SimConnect, AircraftRequests
 import time
 import math
@@ -7,37 +17,54 @@ from datetime import datetime
 from Calculations import get_wind_direction, get_wind_speed, get_pressure
 from ExportData import get_data
 
-def insert_measurement(db, flight_id):
-    latitude = aq.get("PLANE_LATITUDE")                                                                             # degrees
-    longitude = aq.get("PLANE_LONGITUDE")                                                                           # degrees
-    altitude = aq.get("PLANE_ALTITUDE")                                                                             # feet
-    altitude_agl = aq.get("PLANE_ALT_ABOVE_GROUND")                                                                 # feet
-    indicated_airspeed = aq.get("AIRSPEED_INDICATED")                                                               # knots/s
-    ground_speed = aq.get("GROUND_VELOCITY")                                                                        # knots/s
-    vertical_speed = aq.get("VERTICAL_SPEED")                                                                       # TBD
-    pitch = math.degrees(aq.get("PLANE_PITCH_DEGREES"))                                                             # degrees
-    roll = math.degrees(aq.get("PLANE_BANK_DEGREES"))                                                               # degrees
-    yaw = math.degrees(aq.get("PLANE_HEADING_DEGREES_MAGNETIC"))                                                    # degrees
-    vario = aq.get("VARIOMETER_RATE")                                                                               # TBD
-    g_force = aq.get("G_FORCE")                                                                                     # TBD
-    wind_direction = get_wind_direction(aq.get("AIRCRAFT_WIND_X"), aq.get("AIRCRAFT_WIND_Z"),                       # degrees
-                                        aq.get("PLANE_HEADING_DEGREES_MAGNETIC"))
-    wind_force = get_wind_speed(aq.get("AIRCRAFT_WIND_X"), aq.get("AIRCRAFT_WIND_Y"), aq.get("AIRCRAFT_WIND_Z"))    # m/s
-    temperature = aq.get("TOTAL_AIR_TEMPERATURE")                                                                   # degrees Celsius
-    pressure = get_pressure(aq.get("SEA_LEVEL_PRESSURE"), aq.get("PLANE_ALTITUDE"))                                 # atmosphere
+# **********************************************************************************************************************
+#   Functions
+# **********************************************************************************************************************
 
+def insert_measurement(db, flight_id):
+    '''
+    Insert a measurement into the database
+    '''
+    latitude = aq.get("PLANE_LATITUDE")                                                         # degrees
+    longitude = aq.get("PLANE_LONGITUDE")                                                       # degrees
+    altitude = aq.get("PLANE_ALTITUDE")                                                         # feet
+    altitude_agl = aq.get("PLANE_ALT_ABOVE_GROUND")                                             # feet
+    indicated_airspeed = aq.get("AIRSPEED_INDICATED")                                           # knots/s
+    ground_speed = aq.get("GROUND_VELOCITY")                                                    # knots/s
+    vertical_speed = aq.get("VERTICAL_SPEED")                                                   # TBD
+    pitch = math.degrees(aq.get("PLANE_PITCH_DEGREES"))                                         # degrees
+    roll = math.degrees(aq.get("PLANE_BANK_DEGREES"))                                           # degrees
+    yaw = math.degrees(aq.get("PLANE_HEADING_DEGREES_MAGNETIC"))                                # degrees
+    vario = aq.get("VARIOMETER_RATE")                                                           # TBD
+    g_force = aq.get("G_FORCE")                                                                 # TBD
+    wind_direction = get_wind_direction(aq.get("AIRCRAFT_WIND_X"), aq.get("AIRCRAFT_WIND_Z"),   # degrees
+                                        aq.get("PLANE_HEADING_DEGREES_MAGNETIC"))
+    wind_force = get_wind_speed(aq.get("AIRCRAFT_WIND_X"), aq.get("AIRCRAFT_WIND_Y"),           # m/s
+                                aq.get("AIRCRAFT_WIND_Z"))
+    temperature = aq.get("TOTAL_AIR_TEMPERATURE")                                               # degrees Celsius
+    pressure = get_pressure(aq.get("SEA_LEVEL_PRESSURE"), aq.get("PLANE_ALTITUDE"))             # atmosphere
+
+    # Logs into the database all telemetry measurements
     create_measurement(db, datetime.now(), latitude, longitude, altitude, altitude_agl, indicated_airspeed, ground_speed,
                        vertical_speed, pitch, roll, yaw, vario, g_force, wind_direction, wind_force, temperature,
-                       pressure,
-                       flight_id)
+                       pressure, flight_id)
 
-sm = SimConnect()
-aq = AircraftRequests(sm)
-db = SessionLocal()
 
-no_sim = False
+# **********************************************************************************************************************
+#   Variables
+# **********************************************************************************************************************
+sm = SimConnect()           # SimConnect instance
+aq = AircraftRequests(sm)   # Used to get values from SimVars
+db = SessionLocal()         # Database instance
+
+no_sim = False              # Used to get out of the program's main loop when the plane is not moving on the ground
+
+# **********************************************************************************************************************
+#   Program
+# **********************************************************************************************************************
 
 try:
+    # Creates a new flight with starting date and location
     current_flight = create_flight(db, datetime.now(), f"{aq.get("PLANE_LATITUDE")},{aq.get("PLANE_LONGITUDE")}",
                                    f"", None, None)
 except Exception as e:
@@ -46,17 +73,21 @@ except Exception as e:
 
 while not no_sim:
     try:
-        insert_measurement(db, current_flight.Id)
+        insert_measurement(db, current_flight.Id)   # Creates a new measurement for the current flight
 
-        if aq.get("AIRSPEED_INDICATED") < 3 and aq.get("GROUND_VELOCITY") < 3 and -15 < aq.get("VERTICAL_SPEED") < 3:
+        if aq.get("GROUND_VELOCITY") < 3 and aq.get("PLANE_ALT_ABOVE_GROUND") < 3:
+            # Updates the flight with ending date and location
             update_flight(db, current_flight.Id, None, None, None, datetime.now(),
                         f"{aq.get("PLANE_LATITUDE")},{aq.get("PLANE_LONGITUDE")}")
             break
 
-        time.sleep(10)
+        time.sleep(10)  # Waits 10 seconds before doing another measurement
+
     except Exception as e:
         print("Impossible d'enregistrer les données du vol, le simulateur n'est plus en marche")
-        no_sim = True
+        break
 
-get_data(current_flight)
+if not no_sim:
+    get_data(current_flight)    # Exports current flight data to csv file
+
 sm.exit()

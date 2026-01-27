@@ -1,5 +1,19 @@
+# Program name: CRUD.Thermals.py
+# Description: CRUD functions for the Thermals table in our database (unused, but kept for futureproofing)
+# Created by: Jason Edmonds
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.2
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 from Class.Thermals import Thermals
 from sqlalchemy.orm import Session
+
+# **********************************************************************************************************************
+#   Functions
+# **********************************************************************************************************************
 
 def create_thermal(db: Session, strength: float, radius: float, glider_id: int):
     new_thermal = Thermals(
@@ -20,6 +34,7 @@ def get_thermal(db: Session, thermal_id: int):
 def get_thermals(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Thermals).offset(skip).limit(limit).all()
 
+
 def delete_thermal(db: Session, thermal_id: int):
     thermal = db.query(Thermals).filter(Thermals.Id == thermal_id).first()
     if thermal:
@@ -27,6 +42,7 @@ def delete_thermal(db: Session, thermal_id: int):
         db.commit()
         db.close()
     return thermal
+
 
 def update_thermal(db: Session, thermal_id: int, strength: float = None, radius: float = None, glider_id: int = None):
     thermal = db.query(Thermals).filter(Thermals.Id == thermal_id).first()

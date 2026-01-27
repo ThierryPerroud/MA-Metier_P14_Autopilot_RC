@@ -1,6 +1,19 @@
+# Program name: CRUD.Telemetry_measurements.py
+# Description: CRUD functions for the Telemetry_measurements table in our database
+# Created by: Jason Edmonds
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.4
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 from sqlalchemy.orm import Session
 from Class import Telemetry_measurements
 
+# **********************************************************************************************************************
+#   Functions
+# **********************************************************************************************************************
 
 # CREATE - Créer une nouvelle mesure de télémétrie
 def create_measurement(db: Session, timestamp: str, latitude: float, longitude: float,

@@ -1,6 +1,19 @@
+# Program name: Class.Flights.py
+# Description: Defines the Flights class
+# Created by: Jason Edmonds
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.2
+
+# **********************************************************************************************************************
+#   Imports
+# **********************************************************************************************************************
 from sqlalchemy import Column, Integer, String
 from Class.database import Base
 
+# **********************************************************************************************************************
+#   Clases
+# **********************************************************************************************************************
 class Flights(Base):
     __tablename__ = "flights"
 

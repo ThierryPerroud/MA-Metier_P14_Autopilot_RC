@@ -1,3 +1,14 @@
+# Program name: Calculations.CalculPressure.py
+# Description: Function to calculate the air pressure at the glider's current altitude
+# Created by: Thierry Perroud
+# Last modified by: Thierry Perroud
+# Last Modified date: 27.01.2026
+# Version : 0.2
+
+# **********************************************************************************************************************
+#   Functions
+# **********************************************************************************************************************
+
 def get_pressure(SEA_LEVEL_PRESSURE, altitude):
     # Formula found on: https://en.wikipedia.org/wiki/Atmospheric_pressure#Altitude_variation
     altitude_in_meters = altitude * (0.3048/1)          # m
