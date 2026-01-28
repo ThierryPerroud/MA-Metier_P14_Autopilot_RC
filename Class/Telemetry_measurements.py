@@ -23,6 +23,7 @@ class Telemetry_measurements(Base):
     Longitude = Column(REAL)            # PLANE_LONGITUDE
     Altitude = Column(Integer)          # PLANE_ALTITUDE
     Altitude_agl = Column(Integer)      # PLANE_ALT_ABOVE_GROUND
+    Ground_Level = Column(Integer)      # PLANE_ALTITUDE - PLANE_ALT_ABOVE_GROUND
     Indicated_airspeed = Column(REAL)   # AIRSPEED_INDICATED
     Ground_speed = Column(REAL)         # GROUND_VELOCITY
     Vertical_speed = Column(REAL)       # VERTICAL_SPEED

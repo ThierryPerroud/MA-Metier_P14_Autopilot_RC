@@ -2,8 +2,8 @@
 # Description: Transforms the Class directory into a package
 # Created by: Jason Edmonds
 # Last modified by: Thierry Perroud
-# Last Modified date: 27.01.2026
-# Version : 0.3
+# Last Modified date: 28.01.2026
+# Version : 0.3.2
 
 # **********************************************************************************************************************
 #   Imports
