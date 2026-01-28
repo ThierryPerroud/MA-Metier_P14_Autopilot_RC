@@ -3,7 +3,7 @@
 # Created by: Jason Edmonds
 # Last modified by: Thierry Perroud
 # Last Modified date: 27.01.2026
-# Version : 0.4
+# Version : 0.5
 
 # **********************************************************************************************************************
 #   Imports
@@ -17,7 +17,7 @@ from Class import Telemetry_measurements
 
 # CREATE - Créer une nouvelle mesure de télémétrie
 def create_measurement(db: Session, timestamp: str, latitude: float, longitude: float,
-                       altitude: int, altitude_agl: int, indicated_airspeed: float,
+                       altitude: int, altitude_agl: int, ground_level: int , indicated_airspeed: float,
                        ground_speed: float, vertical_speed: float, pitch: float, roll: float, yaw: float,
                        vario: float, g_force: float, wind_direction: int,
                        wind_force: float, temperature: float, pressure: float, flight_id: int):
@@ -27,6 +27,7 @@ def create_measurement(db: Session, timestamp: str, latitude: float, longitude: 
         Longitude=longitude,
         Altitude=altitude,
         Altitude_agl=altitude_agl,
+        Ground_Level=ground_level,
         Indicated_airspeed=indicated_airspeed,
         Ground_speed=ground_speed,
         Vertical_speed=vertical_speed,
@@ -120,6 +121,7 @@ if __name__ == "__main__":
         longitude=6.6323,
         altitude=1500,
         altitude_agl=500,
+        ground_level=1000,
         indicated_airspeed=80.5,
         ground_speed=85.2,
         vertical_speed=90,

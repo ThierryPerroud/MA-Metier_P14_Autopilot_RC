@@ -2,8 +2,8 @@
 # Description: Transforms the CRUD directory into a package
 # Created by: Jason Edmonds
 # Last modified by: Thierry Perroud
-# Last Modified date: 27.01.2026
-# Version : 0.4
+# Last Modified date: 28.01.2026
+# Version : 0.4.2
 
 # **********************************************************************************************************************
 #   Imports

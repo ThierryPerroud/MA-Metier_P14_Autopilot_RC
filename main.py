@@ -2,7 +2,7 @@
 # Description: Main program of the glider autopilot
 # Created by: Thierry Perroud
 # Last modified by: Thierry Perroud
-# Last Modified date: 27.01.2026
+# Last Modified date: 28.01.2026
 # Version : 0.6
 
 # **********************************************************************************************************************
@@ -29,6 +29,7 @@ def insert_measurement(db, flight_id):
     longitude = aq.get("PLANE_LONGITUDE")                                                       # degrees
     altitude = aq.get("PLANE_ALTITUDE")                                                         # feet
     altitude_agl = aq.get("PLANE_ALT_ABOVE_GROUND")                                             # feet
+    ground_level = altitude - altitude_agl                                                      # feet
     indicated_airspeed = aq.get("AIRSPEED_INDICATED")                                           # knots/s
     ground_speed = aq.get("GROUND_VELOCITY")                                                    # knots/s
     vertical_speed = aq.get("VERTICAL_SPEED")                                                   # TBD
@@ -45,7 +46,7 @@ def insert_measurement(db, flight_id):
     pressure = get_pressure(aq.get("SEA_LEVEL_PRESSURE"), aq.get("PLANE_ALTITUDE"))             # atmosphere
 
     # Logs into the database all telemetry measurements
-    create_measurement(db, datetime.now(), latitude, longitude, altitude, altitude_agl, indicated_airspeed, ground_speed,
+    create_measurement(db, datetime.now(), latitude, longitude, altitude, altitude_agl, ground_level, indicated_airspeed, ground_speed,
                        vertical_speed, pitch, roll, yaw, vario, g_force, wind_direction, wind_force, temperature,
                        pressure, flight_id)
 
@@ -81,7 +82,7 @@ while not no_sim:
                         f"{aq.get("PLANE_LATITUDE")},{aq.get("PLANE_LONGITUDE")}")
             break
 
-        time.sleep(10)  # Waits 10 seconds before doing another measurement
+        time.sleep(3.6)  # Waits 3.6 seconds before doing another measurement (takes approx. 1.4 seconds to execute)
 
     except Exception as e:
         print("Impossible d'enregistrer les données du vol, le simulateur n'est plus en marche")
