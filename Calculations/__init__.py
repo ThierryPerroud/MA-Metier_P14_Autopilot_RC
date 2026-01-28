@@ -3,7 +3,7 @@
 # Created by: Thierry Perroud
 # Last modified by: Thierry Perroud
 # Last Modified date: 27.01.2026
-# Version : 0.2
+# Version : 0.3
 
 # **********************************************************************************************************************
 #   Imports
@@ -17,8 +17,9 @@ from .CalculWind import *
 #   Variables
 # **********************************************************************************************************************
 __all__ = [
-    CalculDirection,
-    CalculDistance,
-    CalculPressure,
-    CalculWind
+    "cap_vrai",
+    "distance_haversine",
+    "get_pressure",
+    "get_wind_speed",
+    "get_wind_direction"
 ]

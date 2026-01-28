@@ -3,18 +3,18 @@
 # Created by: Thierry Perroud
 # Last modified by: Thierry Perroud
 # Last Modified date: 27.01.2026
-# Version : 0.5
+# Version : 0.6
 
 # **********************************************************************************************************************
 #   Imports
 # **********************************************************************************************************************
 from SimConnect import SimConnect, AircraftRequests
-import time
-import math
-from Class.database import SessionLocal
-from CRUD import create_measurement, create_flight, update_flight
 from datetime import datetime
-from Calculations import get_wind_direction, get_wind_speed, get_pressure
+import math
+import time
+from Class import *
+from CRUD import *
+from Calculations import *
 from ExportData import get_data
 
 # **********************************************************************************************************************
@@ -88,6 +88,6 @@ while not no_sim:
         break
 
 if not no_sim:
-    get_data(current_flight)    # Exports current flight data to csv file
+    get_data(current_flight.Id)    # Exports current flight data to csv file
 
 sm.exit()
