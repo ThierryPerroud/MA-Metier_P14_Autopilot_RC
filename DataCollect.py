@@ -3,7 +3,7 @@
 # Created by: Thierry Perroud
 # Last modified by: Thierry Perroud
 # Last Modified date: 29.01.2026
-# Version : 0.7
+# Version : 1.0
 
 # **********************************************************************************************************************
 #   Imports
@@ -75,13 +75,13 @@ while not no_sim:
     try:
         insert_measurement(db, current_flight.Id)   # Creates a new measurement for the current flight
 
-        if aq.get("GROUND_VELOCITY") < 3 and aq.get("PLANE_ALT_ABOVE_GROUND") < 3:
+        if aq.get("GROUND_VELOCITY") < 5 and aq.get("PLANE_ALT_ABOVE_GROUND") < 10:
             # Updates the flight with ending date and location
             update_flight(db, current_flight.Id, None, None, None, datetime.now(),
                         f"{aq.get("PLANE_LATITUDE")},{aq.get("PLANE_LONGITUDE")}")
             break
 
-        time.sleep(3.6)  # Waits 3.6 seconds before doing another measurement (takes approx. 1.4 seconds to execute)
+        time.sleep(2.6)  # Waits 3.6 seconds before doing another measurement (takes approx. 1.4 seconds to execute)
 
     except Exception as e:
         print("Il y a eu un problème avec la collecte de données")

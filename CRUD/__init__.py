@@ -3,7 +3,7 @@
 # Created by: Jason Edmonds
 # Last modified by: Thierry Perroud
 # Last Modified date: 28.01.2026
-# Version : 0.4.2
+# Version : 1.0
 
 # **********************************************************************************************************************
 #   Imports

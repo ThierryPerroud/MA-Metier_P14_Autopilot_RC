@@ -3,7 +3,7 @@
 # Created by: Thierry Perroud
 # Last modified by: Thierry Perroud
 # Last Modified date: 28.01.2026
-# Version : 0.4
+# Version : 1.0
 
 # **********************************************************************************************************************
 #   Imports
