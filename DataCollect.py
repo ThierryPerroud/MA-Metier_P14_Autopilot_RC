@@ -1,17 +1,16 @@
-# Program name: main.py
-# Description: Main program of the glider autopilot
+# Program name: DataCollect.py
+# Description: Collects data while the glider is flying
 # Created by: Thierry Perroud
 # Last modified by: Thierry Perroud
-# Last Modified date: 28.01.2026
-# Version : 0.6
+# Last Modified date: 29.01.2026
+# Version : 0.7
 
 # **********************************************************************************************************************
 #   Imports
 # **********************************************************************************************************************
 from SimConnect import SimConnect, AircraftRequests
 from datetime import datetime
-import math
-import time
+import math, time
 from Class import *
 from CRUD import *
 from Calculations import *
@@ -85,8 +84,8 @@ while not no_sim:
         time.sleep(3.6)  # Waits 3.6 seconds before doing another measurement (takes approx. 1.4 seconds to execute)
 
     except Exception as e:
-        print("Impossible d'enregistrer les données du vol, le simulateur n'est plus en marche")
-        break
+        print("Il y a eu un problème avec la collecte de données")
+        continue
 
 if not no_sim:
     get_data(current_flight.Id)    # Exports current flight data to csv file
